@@ -1,0 +1,9 @@
+opencv-python==3.4.3.18
+scikit-learn==0.22.0
+matplotlib
+
+# apt-get update
+# apt-get install libgtk2.0-dev
+# apt-get install -y upzip wget
+# wget -c https://www.robots.ox.ac.uk/~xuji/datasets/COCOStuff164kCurated.tar.gz
+# tar -xvf COCOStuff164kCurated.tar.gz
