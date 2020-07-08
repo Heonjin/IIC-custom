@@ -508,12 +508,20 @@ class _Coco164kCuratedFew(_Coco):
     else:
       raise ValueError("Invalid split name: {}".format(self.split))
 
+  def _brg2gray(self,image_path):
+    image = cv2.imread(image_path)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    return gray
+
   def _load_data(self, image_id):
     # same as _Coco164k
     # Set paths
     image_path = osp.join(self.root, "images", self.split, image_id + ".jpg")
     label_path = osp.join(self.root, "annotations", self.split,
                           image_id + ".png")
+    if True:
+      label_path = osp.join(self.root, "annotations", self.split,
+                          image_id + ".jpg")
     # Load an image
     image = cv2.imread(image_path, cv2.IMREAD_COLOR).astype(np.uint8)
     label = cv2.imread(label_path, cv2.IMREAD_GRAYSCALE).astype(np.int32)

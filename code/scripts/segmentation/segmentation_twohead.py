@@ -369,12 +369,12 @@ def train():
     # Eval
     # -----------------------------------------------------------------------
 
-    is_best = segmentation_eval(config, net,
-                                mapping_assignment_dataloader=mapping_assignment_dataloader,
-                                mapping_test_dataloader=mapping_test_dataloader,
-                                sobel=(
-                                  not config.no_sobel),
-                                using_IR=config.using_IR)
+#    is_best = segmentation_eval(config, net,
+#                                mapping_assignment_dataloader=mapping_assignment_dataloader,
+#                                mapping_test_dataloader=mapping_test_dataloader,
+#                                sobel=(
+#                                  not config.no_sobel),
+#                                using_IR=config.using_IR)
 
     print(
       "Pre: time %s: \n %s" % (datetime.now(), nice(config.epoch_stats[-1])))
@@ -415,6 +415,7 @@ def train():
 
     fig.canvas.draw_idle()
     fig.savefig(os.path.join(config.out_dir, "plots.png"))
+    continue
 
     if is_best or (e_i % config.save_freq == 0):
       net.module.cpu()
