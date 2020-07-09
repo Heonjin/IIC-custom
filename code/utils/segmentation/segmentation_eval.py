@@ -83,6 +83,20 @@ def _segmentation_get_data(config, net, dataloader, sobel=False,
     with torch.no_grad():
       x_outs = net(imgs)
 
+    # print ---------------------------------------
+    if config.save_image and config.epoch % 5 == 0:
+      from torchvision.utils import save_image
+#      l = len(dataloader)
+      import time
+      for i in range(len(x_outs)):
+        t = str(time.time())
+        save_image(imgs[i][:3], 'outputs/'+'img_'+t+'_'+str(i)+'.png')
+        save_image(torch.argmax(x_outs[i], dim=1), 'outputs/'+'img_'+t+'_'+str(i)+'.png')
+        print([i.size() for i in x_outs])
+#      print([i.size() for i in x_outs])
+#      continue
+    # print end ----------------------------------
+
     assert (x_outs[0].shape[1] == config.output_k)
     assert (x_outs[0].shape[2] == config.input_sz and x_outs[0].shape[
       3] == config.input_sz)

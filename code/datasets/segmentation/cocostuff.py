@@ -477,6 +477,7 @@ class _Coco164kCuratedFew(_Coco):
 
     # work out name
     config = kwargs["config"]
+    self.config = kwargs["config"]
     assert (config.use_coarse_labels)  # we only deal with coarse labels
     self.include_things_labels = config.include_things_labels  # people
     self.incl_animal_things = config.incl_animal_things  # animals
@@ -519,7 +520,7 @@ class _Coco164kCuratedFew(_Coco):
     image_path = osp.join(self.root, "images", self.split, image_id + ".jpg")
     label_path = osp.join(self.root, "annotations", self.split,
                           image_id + ".png")
-    if True:
+    if self.config.custom:
       label_path = osp.join(self.root, "annotations", self.split,
                           image_id + ".jpg")
     # Load an image
@@ -545,6 +546,7 @@ class _Coco164kCuratedFull(_Coco):
 
     # work out name
     config = kwargs["config"]
+    self.config = config
     assert (config.use_coarse_labels)  # we only deal with coarse labels
 
     assert (not config.include_things_labels)
@@ -576,6 +578,9 @@ class _Coco164kCuratedFull(_Coco):
     image_path = osp.join(self.root, "images", self.split, image_id + ".jpg")
     label_path = osp.join(self.root, "annotations", self.split,
                           image_id + ".png")
+    if self.config.custom:
+      label_path = osp.join(self.root, "annotations", self.split,
+                          image_id + ".jpg")
     # Load an image
     image = cv2.imread(image_path, cv2.IMREAD_COLOR).astype(np.uint8)
     label = cv2.imread(label_path, cv2.IMREAD_GRAYSCALE).astype(np.int32)

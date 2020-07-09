@@ -29,10 +29,15 @@ from code.utils.segmentation.general import set_segmentation_input_channels
   Train and test script.
   Network has two heads, for overclustering and final clustering.
 """
+# My additional Options -------
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--custom', action='store_true', default = False)
+parser.add_argument('--save_image', action='store_true', default = False)
+
 
 # Options ----------------------------------------------------------------------
 
-parser = argparse.ArgumentParser()
 parser.add_argument("--model_ind", type=int, required=True)
 parser.add_argument("--arch", type=str, required=True)
 parser.add_argument("--opt", type=str, default="Adam")
@@ -368,13 +373,14 @@ def train():
 
     # Eval
     # -----------------------------------------------------------------------
-
-#    is_best = segmentation_eval(config, net,
-#                                mapping_assignment_dataloader=mapping_assignment_dataloader,
-#                                mapping_test_dataloader=mapping_test_dataloader,
-#                                sobel=(
-#                                  not config.no_sobel),
-#                                using_IR=config.using_IR)
+    
+    config.epoch=e_i
+    is_best = segmentation_eval(config, net,
+                                mapping_assignment_dataloader=mapping_assignment_dataloader,
+                                mapping_test_dataloader=mapping_test_dataloader,
+                                sobel=(
+                                  not config.no_sobel),
+                                using_IR=config.using_IR)
 
     print(
       "Pre: time %s: \n %s" % (datetime.now(), nice(config.epoch_stats[-1])))
