@@ -65,7 +65,7 @@ def _segmentation_get_data(config, net, dataloader, sobel=False,
   flat_targets_all = torch.zeros((num_batches * samples_per_batch),
                                  dtype=torch.uint8).cuda()
   mask_all = torch.zeros((num_batches * samples_per_batch),
-                         dtype=torch.uint8).cuda()
+                         dtype=torch.bool).cuda()
 
   if verbose > 0:
     batch_start = datetime.now()
@@ -84,7 +84,7 @@ def _segmentation_get_data(config, net, dataloader, sobel=False,
       x_outs = net(imgs)
 
     # print ---------------------------------------
-    if config.save_image and config.epoch % 5 == 0:
+    if False and config.save_image and config.epoch % 5 == 0:
       from torchvision.utils import save_image
 #      l = len(dataloader)
       import time

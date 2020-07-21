@@ -1,3 +1,3 @@
 from .baselines import *
-from .cocostuff import *
+from .cocostuff_custom import *
 from .potsdam import *

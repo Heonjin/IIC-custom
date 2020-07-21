@@ -214,6 +214,8 @@ def train():
     config.epoch_loss_head_B = []
     config.epoch_loss_no_lamb_head_B = []
 
+    config.epoch = 0
+    print('----------------------- before eval--------------------------')
     _ = segmentation_eval(config, net,
                           mapping_assignment_dataloader=mapping_assignment_dataloader,
                           mapping_test_dataloader=mapping_test_dataloader,
@@ -373,8 +375,10 @@ def train():
 
     # Eval
     # -----------------------------------------------------------------------
+    print('----------------eval start------------------')
     
-    config.epoch=e_i
+    config.epoch = e_i
+    print(config.epoch)
     is_best = segmentation_eval(config, net,
                                 mapping_assignment_dataloader=mapping_assignment_dataloader,
                                 mapping_test_dataloader=mapping_test_dataloader,

@@ -5,7 +5,7 @@ import torch
 from torch.utils.data import ConcatDataset
 
 from code.datasets.segmentation import DoerschDataset
-from code.datasets.segmentation import cocostuff
+from code.datasets.segmentation import cocostuff_custom as cocostuff
 from code.datasets.segmentation import potsdam
 
 
@@ -56,6 +56,9 @@ def segmentation_create_dataloaders(config):
 
 
 def make_Coco_dataloaders(config):
+  if config.custom:
+    t = config.dataset
+    config.dataset = "Custom"
   dataloaders = _create_dataloaders(config, cocostuff.__dict__[config.dataset])
 
   mapping_assignment_dataloader = \
@@ -65,7 +68,9 @@ def make_Coco_dataloaders(config):
   mapping_test_dataloader = \
     _create_mapping_loader(config, cocostuff.__dict__[config.dataset],
                            partitions=config.mapping_test_partitions)
-
+  
+  if config.custom:
+    config.dataset = t
   return dataloaders, mapping_assignment_dataloader, mapping_test_dataloader
 
 
