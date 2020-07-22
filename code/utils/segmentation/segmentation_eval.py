@@ -84,17 +84,24 @@ def _segmentation_get_data(config, net, dataloader, sobel=False,
       x_outs = net(imgs)
 
     # print ---------------------------------------
-    if False and config.save_image and config.epoch % 5 == 0:
+    if True:
       from torchvision.utils import save_image
-#      l = len(dataloader)
+      import matplotlib.pyplot as plt
       import time
-      for i in range(len(x_outs)):
-        t = str(time.time())
-        save_image(imgs[i][:3], 'outputs/'+'img_'+t+'_'+str(i)+'.png')
-        save_image(torch.argmax(x_outs[i], dim=1), 'outputs/'+'img_'+t+'_'+str(i)+'.png')
-        print([i.size() for i in x_outs])
-#      print([i.size() for i in x_outs])
-#      continue
+      print('b_i',b_i)
+      if config.save_image and config.epoch % 5 == 0:
+  #      l = len(dataloader)
+        for i in range(len(x_outs)):
+          t = str(time.time())
+          save_image(imgs[i][:3], 'outputs/'+'img_'+t+'_'+str(i)+'.png')
+          for j in range(x_outs[i].size(0)):
+            temp = torch.argmax(x_outs[i], dim=1).type(torch.float)[0]
+            m = temp.max()
+            assert m == config.gt_k-1
+            temp /= float(config.gt_k)
+            # print(temp)
+            save_image(temp, 'outputs/'+'img_'+t+'_'+str(j)+'_'+str(i)+'.png')
+      # continue
     # print end ----------------------------------
 
     assert (x_outs[0].shape[1] == config.output_k)
